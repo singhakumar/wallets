@@ -28,7 +28,7 @@ pipeline{
             }
         }
         
-        stage('Upstream Down'){
+        stage('Get Upstream To Removed'){
          steps{
             script{
                 if(params.Choice_Remove == 'Odd'){
@@ -46,9 +46,9 @@ pipeline{
            }
         }
         
-        stage('Deployed'){
+        stage('Down Upstream'){
             steps{
-                echo 'War Deployed'
+                echo 'Upstream to be removed ${vremove}'
             }
         }
     }
