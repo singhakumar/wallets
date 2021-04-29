@@ -48,7 +48,7 @@ pipeline{
         
         stage('Down Upstream'){
             steps{
-                echo 'Upstream to be removed ${vremove}'
+                echo "Upstream to be removed ${vremove}"
             }
         }
     }
