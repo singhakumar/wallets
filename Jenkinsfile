@@ -49,7 +49,7 @@ pipeline{
         stage('Down Upstream'){
             steps{
                 ansiblePlaybook become: true, extras: "-e ip_address=${vremove}", installation: 'ansible 2.9.15', inventory: '/var/lib/jenkins/ansible-playbooks/inve', playbook: '/var/lib/jenkins/ansible-playbooks/upstream_down_job.yaml'
-             #   echo "Upstream to be removed ${vremove}"
+             //   echo "Upstream to be removed ${vremove}"
             }
         }
     }
