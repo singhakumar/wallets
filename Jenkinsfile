@@ -60,6 +60,14 @@ pipeline{
                 input('Do you want to proceed?')
             }
         }
+
+        // War Deployment Stage         
+        stage('War Deployment Stage') {
+            steps {
+                ansiblePlaybook become: true, extras: "-e app_var=${vremove_odd}", installation: 'ansible 2.9.15', inventory: '/var/lib/jenkins/ansible-playbooks/inve', playbook: '/var/lib/jenkins/ansible-playbooks/upstream_deploy.yaml'
+            }
+        }
+
       
          stage('Add Upstream'){
             steps{
