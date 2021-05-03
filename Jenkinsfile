@@ -46,11 +46,25 @@ pipeline{
            }
         }
         
-        stage('Down Upstream'){
+        stage('Remove Upstream'){
             steps{
                 ansiblePlaybook become: true, extras: "-e ip_address=${vremove}", installation: 'ansible 2.9.15', inventory: '/var/lib/jenkins/ansible-playbooks/inve', playbook: '/var/lib/jenkins/ansible-playbooks/upstream_down_job.yaml'
              //   echo "Upstream to be removed ${vremove}"
             }
         }
+      
+        stage('Approval To Continue') {
+            steps {
+                input('Do you want to proceed?')
+            }
+        }
+      
+         stage('Add Upstream'){
+            steps{
+                ansiblePlaybook become: true, extras: "-e ip_address=${vremove}", installation: 'ansible 2.9.15', inventory: '/var/lib/jenkins/ansible-playbooks/inve', 
+playbook: '/var/lib/jenkins/ansible-playbooks/upstream_up_job.yaml'
+            }
+        }
+        
     }
 }
