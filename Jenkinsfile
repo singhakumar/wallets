@@ -33,12 +33,14 @@ pipeline{
             script{
                 if(params.Choice_Remove == 'Odd'){
                  stage('Odd Removed'){
-                      vremove='192.168.20.181,192.168.20.183'  
+                      vremove='192.168.20.181,192.168.20.183'
+                      vremove_odd='odd_app' 
                  }   
                 }
                 if(params.Choice_Remove == 'Even'){
                  stage('Even Removed'){
-                     vremove='192.168.20.182'  
+                     vremove='192.168.20.182' 
+                     vremove_odd='even_app' 
                  }   
                 }
             }
