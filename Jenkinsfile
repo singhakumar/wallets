@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    environment {
+    vremove_odda  = servertoremove()
+     }
     tools{
         maven 'Apache Maven 3.6.0'
         jdk 'OpenJDk'
@@ -28,25 +31,7 @@ pipeline{
             }
         }
         
-        stage('Get Upstream To Removed'){
-         steps{
-            script{
-                if(params.Choice_Remove == 'Odd'){
-                 stage('Odd Removed'){
-                      vremove='192.168.20.181,192.168.20.183'
-                      vremove_odd='oddapp' 
-                 }   
-                }
-                if(params.Choice_Remove == 'Even'){
-                 stage('Even Removed'){
-                     vremove='192.168.20.182' 
-                     vremove_odd='evenapp' 
-                 }   
-                }
-            }
-             echo vremove
-           }
-        }
+        
         
         stage('Remove Upstream'){
             steps{
@@ -64,7 +49,7 @@ pipeline{
         // War Deployment Stage         
         stage('War Deployment Stage') {
             steps {
-                ansiblePlaybook become: true, extras: "-e app_var=${vremove_odd}", installation: 'ansible 2.9.15', inventory: '/var/lib/jenkins/ansible-playbooks/inve', playbook: '/var/lib/jenkins/ansible-playbooks/upstream_deploy.yaml'
+                ansiblePlaybook become: true, extras: "-e app_var=${vremove_odda}", installation: 'ansible 2.9.15', inventory: '/var/lib/jenkins/ansible-playbooks/inve', playbook: '/var/lib/jenkins/ansible-playbooks/upstream_deploy.yaml'
             }
         }
 
@@ -77,4 +62,21 @@ playbook: '/var/lib/jenkins/ansible-playbooks/upstream_up_job.yaml'
         }
         
     }
+}
+
+
+def servertoremove(){
+	 if(params.Choice_Remove == 'Odd')
+	 {
+        vremove='192.168.20.181,192.168.20.183'
+        vremove_odd='oddapp' 
+		return vremove_odd
+     }   
+   
+   if(params.Choice_Remove == 'Even')
+   {
+        vremove='192.168.20.182' 
+        vremove_odd='evenapp'
+        return vremove_odd		
+   }   
 }
