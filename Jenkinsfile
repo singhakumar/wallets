@@ -4,7 +4,7 @@ pipeline{
     vremove_odda  = servertoremove()
      }
     tools{
-        maven 'Apache Maven 3.6.0'
+        maven 'Apache Maven 3.0.5'
         jdk 'OpenJDk'
     }
     stages{
