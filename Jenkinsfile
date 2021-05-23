@@ -1,12 +1,19 @@
 pipeline{
     agent any
+	
+    parameters{
+	    choice(name: 'Choice_Remove', choices: ['Odd', 'Even','All'], description: 'Select App Server To Be Deployed..')
+	}
+	
     environment {
     vremove_odda  = servertoremove()
      }
+	
     tools{
         maven 'Apache Maven 3.0.5'
         jdk 'OpenJDk'
     }
+	
     stages{
         stage('git pull'){
             steps{
@@ -49,6 +56,7 @@ pipeline{
         // War Deployment Stage         
         stage('War Deployment Stage') {
             steps {
+		sleep(time:30,unit:"SECONDS")
                 ansiblePlaybook become: true, extras: "-e app_var=${vremove_odda}", installation: 'ansible 2.9.15', inventory: '/var/lib/jenkins/ansible-playbooks/inve', playbook: '/var/lib/jenkins/ansible-playbooks/upstream_deploy.yaml'
             }
         }
